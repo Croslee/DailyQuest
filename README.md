@@ -1,4 +1,4 @@
-# DailyQuest v1.0 — Minimalist Gamified RPG Task & Habit Productivity Extension
+# DailyQuest v1.0 — Checklists Extension
 
 > **Turn everyday tasks into epic daily quests.**  
 > A minimalist, local-first, offline-first productivity browser extension for Google Chrome and Chromium-based browsers (Microsoft Edge, Brave, Arc, Cốc Cốc, etc.) built with Manifest V3, React 19, TypeScript, Tailwind CSS v4, and IndexedDB.
@@ -8,47 +8,16 @@
 
 ## Table of Contents
 1. [Overview](#overview)
-2. [Core Product Principles](#core-product-principles)
-3. [Key Features](#key-features)
-4. [Architecture & Design](#architecture--design)
-5. [IndexedDB Schema](#indexeddb-schema)
-6. [Daily Quest Generation, Scoring & Streak Combo](#daily-quest-generation-scoring--streak-combo)
-7. [Development Workflow & Scripts](#development-workflow--scripts)
-8. [Installation & Release Guide](#installation--release-guide)
-9. [Data Export, Import & Markdown Notes](#data-export-import--markdown-notes)
-10. [Privacy & Security](#privacy--security)
+2. [Key Features](#key-features)
+3. [Installation Guide](#installation-guide)
+4. [Data Export, Import & Markdown Notes](#data-export-import--markdown-notes)
+5. [Privacy & Security](#privacy--security)
 
 ---
 
 ## Overview
 
 DailyQuest combines the quick-capture simplicity of **Google Keep**, the consistency tracking of **GitHub Contributions**, the focus discipline of **Pomodoro**, and the rewarding feedback loops of **RPG progression** into a clean, minimalist application inspired by Obsidian's calm dark design aesthetic.
-
-### The Core Loop
-```text
-Create Quest Blueprint / Quick Add [N]
-               ↓
-     Materialize Daily Instance
-               ↓
-   Focus with Pomodoro & Sound Chime
-               ↓
- Complete Quest (+XP reward & Streak Combo Multiplier)
-               ↓
-     Build Daily Score (≥70% success)
-               ↓
- Advance Rank Progression & Equip Badges
-               ↓
-Review Annual Activity Heatmap, Calendar & Export Markdown (.md)
-```
-
----
-
-## Core Product Principles
-
-- **Minimal & Fast**: Lightweight popup (380px) for 3-second task check-offs; full-page dashboard for deep analysis, calendar browsing, and template management.
-- **Offline-First & Local-First**: 100% client-side. Works completely offline with zero mandatory server dependencies or tracking.
-- **Data-Preserving Snapshots**: Completed quest records are **immutable historical snapshots** and are never destroyed when a quest template is edited, archived, or deleted.
-- **Calm, Rewarding Gamification**: No noisy paywalls or intrusive notifications. Success is defined as $\ge 70\%$ completion—encouraging healthy consistency over unhealthy perfectionism.
 
 ---
 
@@ -101,7 +70,7 @@ Review Annual Activity Heatmap, Calendar & Export Markdown (.md)
 
 ### Option A: Install from GitHub Release (.zip)
 1. Download `dailyquest-v1.0.0.zip` from the latest [GitHub Release](https://github.com/).
-2. Unzip the file into a folder of your choice (e.g. `dailyquest-v1.0.0`).
+2. Unzip the file into a folder of your choice 
 3. Open Google Chrome (or Edge / Brave / Arc) and navigate to `chrome://extensions`.
 4. Enable **Developer mode** toggle in the top-right corner.
 5. Click **Load unpacked** in the top-left and select the unzipped folder.

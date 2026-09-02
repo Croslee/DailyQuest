@@ -1,5 +1,32 @@
 # Architecture Overview
-This document serves as a critical, living template designed to equip agents with a rapid and comprehensive understanding of the codebase's architecture, enabling efficient navigation and effective contribution from day one.
+
+## Project Structure
+
+```text
+dailyquest/
+├── public/                 # Static assets, including extension icons
+├── src/
+│   ├── background/         # Manifest V3 service worker
+│   ├── components/         # Reusable React UI components
+│   ├── constants/          # Default values and theme definitions
+│   ├── contexts/           # Shared React context providers
+│   ├── dashboard/          # Full-page dashboard entry point
+│   ├── db/                 # Dexie database and repositories
+│   ├── domain/             # Pure business rules and calculations
+│   ├── hooks/              # React hooks for application state and data
+│   ├── i18n/               # Localization context and locale files
+│   ├── pages/              # Dashboard page views
+│   ├── popup/              # Browser extension popup entry point
+│   ├── services/           # Application and data services
+│   ├── styles/             # Global styles
+│   ├── types/              # Shared TypeScript types
+│   └── utils/              # Small cross-cutting utilities
+├── tests/                  # Unit and component tests by feature layer
+├── manifest.json           # Chrome/Chromium extension manifest
+├── vite.config.ts          # Vite and CRX build configuration
+├── package.json            # Scripts and dependencies
+└── README.md               # Project usage and release guide
+```
 
 ## Architecture & Design
 
@@ -34,6 +61,23 @@ DailyQuest enforces strict layer isolation. React UI components never access Ind
 ```
 
 ---
+### The Core Loop
+```text
+Create Quest Blueprint / Quick Add [N]
+               ↓
+     Materialize Daily Instance
+               ↓
+   Focus with Pomodoro & Sound Chime
+               ↓
+ Complete Quest (+XP reward & Streak Combo Multiplier)
+               ↓
+     Build Daily Score (≥70% success)
+               ↓
+ Advance Rank Progression & Equip Badges
+               ↓
+Review Annual Activity Heatmap, Calendar & Export Markdown (.md)
+```
+
 ## IndexedDB Schema
 
 Database Name: `DailyQuestDB` (Version `1`)
