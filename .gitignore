@@ -1,0 +1,12 @@
+node_modules/
+.vscode/
+dist/
+coverage/
+*.tsbuildinfo
+*.crx
+*.zip
+.env
+.env.*
+!.env.example
+IMPROVEMENTS.md
+.gitignore
