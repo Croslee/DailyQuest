@@ -69,7 +69,7 @@ DailyQuest combines the quick-capture simplicity of **Google Keep**, the consist
 ## Installation Guide
 
 ### Option A: Install from GitHub Release (.zip)
-1. Download `dailyquest-v1.0.0.zip` from the latest [GitHub Release](https://github.com/).
+1. Download `dailyquest-v1.0.0.zip` from the latest [GitHub Release](https://github.com/Croslee/Daily_Quest-Checklists_Extension/releases).
 2. Unzip the file into a folder of your choice 
 3. Open Google Chrome (or Edge / Brave / Arc) and navigate to `chrome://extensions`.
 4. Enable **Developer mode** toggle in the top-right corner.
