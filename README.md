@@ -1,4 +1,4 @@
-# DailyQuest v1.0 — Checklists Extension
+# DailyQuest — Checklists Extension
 
 > **Turn everyday tasks into epic daily quests.**  
 > A minimalist, local-first, offline-first productivity browser extension for Google Chrome and Chromium-based browsers (Microsoft Edge, Brave, Arc, Cốc Cốc, etc.) built with Manifest V3, React 19, TypeScript, Tailwind CSS v4, and IndexedDB.
@@ -23,43 +23,39 @@ DailyQuest combines the quick-capture simplicity of **Google Keep**, the consist
 
 ## Key Features
 
-### Quests & Templates
-- **Recurring & One-Off Tasks**: Daily recurrence blueprints, single-occurrence quests, and customizable schedules.
-- **Task Hierarchy & Subtasks**: Break quests down into checklists with real-time progress indicators.
-- **Categories & Priorities**: Filter by categories (Work, Health, Study, Personal) and priority levels (Low, Medium, High, Urgent).
-- **Skip & Postpone**: Intentionally skip tasks (safely excluded from daily completion rate) or postpone to tomorrow.
+### Quest Management
 
-### Pomodoro Focus Timer
-- **Integrated Header Action**: Interactive expanding button on the dashboard header with smooth hover transition.
-- **Modes**: 25-minute Focus, 5-minute Short Break, and 15-minute Long Break.
-- **Audio Chimes**: Built-in harmonic Zen bell chimes (`D5 -> A5 -> D6`) via Web Audio API when sessions conclude (100% offline).
-- **Quest Binding**: Attach the timer to any specific quest instance to maintain deep focus.
+* **Daily & One-Off Quests** — Create recurring daily quests or one-time tasks with flexible schedules.
+* **Subquests** — Break complex quests into smaller objectives with real-time progress tracking.
+* **Categories & Priorities** — Organize quests with categories and priority levels.
+* **Skip & Postpone** — Skip or postpone quests without negatively affecting completion statistics.
 
-### Rank Progression & Achievements
-- **Rank Realms**: Ascend through ranks based on XP milestones (Mortal $\rightarrow$ Awakened $\rightarrow$ Ascended $\rightarrow$ Transcendent $\rightarrow$ Supreme $\rightarrow$ Sacred $\rightarrow$ Divine).
-- **Achievements & Badges**: Unlock badges for milestone achievements (total quests completed, unbroken streaks, rank promotions).
-- **Equipable Titles**: Display your chosen badge on the Extension Popup with dynamic radiant rarity borders.
+### Gamified Progression
 
-### Streak Multiplier (Combo Bonus)
-- Maintain a daily completion score of $\ge 70\%$ to build your streak flame.
-- **Streak Combo**: Earn **+5% bonus XP per consecutive day** (up to a **+50% maximum XP bonus**), prominently displayed on the dashboard streak card.
+* **XP & Ranks** — Earn XP from completed quests and progress through multiple ranks.
+* **Streaks & Combo Bonus** — Maintain daily streaks and earn bonus XP for consistent progress.
+* **Achievements & Badges** — Unlock achievements and equip earned titles as you reach milestones.
 
-### Shortcuts & Omnibox Quick Capture
-- **Top Header Action [N]**: Press `N` anywhere on the dashboard to open the quick-add quest modal.
-- **Vim Navigation**: Navigate task rows with `J` / `K`, toggle completion with `X`, skip with `S`, postpone with `P`.
-- **Omnibox Address Bar**: Type `dq` + Space in Chrome's address bar to instantly capture a quest from anywhere.
-- **Context Menu**: Highlight any text on any webpage, right-click, and select "Add to DailyQuest".
+### Focus & Productivity
 
-### Heatmap, Statistics & Calendar
-- **GitHub-Style Heatmap**: Continuous 12-month activity heatmap showing completed quest density with interactive day-click inspection.
-- **Calendar History**: Month-by-month browser inspecting exact historical snapshotted titles and XP values.
-- **Weekly & Category Analytics**: 7-day completion bar charts and category distribution breakdowns.
+* **Pomodoro Timer** — Built-in Focus, Short Break, and Long Break modes.
+* **Quest Binding** — Link focus sessions to specific quests.
+* **Keyboard Shortcuts** — Quickly create, navigate, complete, skip, and postpone quests.
+* **Quick Capture** — Add quests instantly through the browser Omnibox or context menu.
 
-### Flexible Data Backup & Cloud Sync
-- **JSON Full Backup**: Full database export and atomic import with duplicate avoidance.
-- **CSV Spreadsheet**: RFC 4180 compliant with UTF-8 BOM for Excel and Google Sheets.
-- **Markdown Note (.md)**: Export clean daily logs formatted for Obsidian, Logseq, or Notion, with one-click clipboard copying.
-- **Optional GitHub Gist Sync**: Secure, encrypted cloud sync for multi-device workflows.
+### Progress Analytics
+
+* **Activity Heatmap** — Visualize your quest activity with a GitHub-style 12-month heatmap.
+* **Calendar History** — Review historical quests, completion status, and earned XP.
+* **Statistics** — Track weekly completion and category distribution.
+
+### Data & Portability
+
+* **Local-First Storage** — Store quests, history, and achievements locally using IndexedDB.
+* **JSON Backup & Restore** — Export and safely restore your complete quest data.
+* **CSV Export** — Export quest data for use with Excel, Google Sheets, and other spreadsheet tools.
+* **Markdown Export** — Export daily logs for Obsidian, Logseq, or Notion.
+* **Optional GitHub Gist Sync** — Sync your data across devices using GitHub Gist.
 
 ---
 
@@ -78,8 +74,8 @@ DailyQuest combines the quick-capture simplicity of **Google Keep**, the consist
 
 ### Option B: Build & Run from Source
 ```bash
-git clone https://github.com/your-username/dailyquest.git
-cd dailyquest
+git clone https://github.com/Croslee/DailyQuest.git
+cd DailyQuest
 npm install
 npm run pack
 ```
@@ -113,5 +109,6 @@ Includes a quick-action button to copy directly to your clipboard.
 - **Zero Remote JavaScript / `eval()`**: Strictly compliant with Manifest V3 Content Security Policies.
 - **Zero Tracking or Analytics**: The extension does not collect, monitor, or phone home any personal data.
 - **100% Local-First Storage**: All tasks, history, and achievements live inside your browser's IndexedDB.
+### Experimental
 - **Secure Cloud Sync**: Gist synchronization uses direct user-provided tokens stored locally with optional client-side passphrase encryption.
 

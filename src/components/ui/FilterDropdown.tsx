@@ -80,7 +80,9 @@ export function FilterDropdown<T extends string>({
       {isOpen && (
         <div
           role="listbox"
-          className="absolute top-full mt-1.5 left-0 rounded-xl shadow-xl border p-1 z-50 min-w-[150px] animate-in fade-in zoom-in-95 duration-150 backdrop-blur-md bg-[var(--color-bg-primary)] border-[var(--color-border)] max-h-60 overflow-y-auto custom-scrollbar"
+          className={`absolute top-full mt-1.5 left-0 rounded-xl shadow-xl border p-1 z-50 animate-in fade-in zoom-in-95 duration-150 backdrop-blur-md bg-[var(--color-bg-primary)] border-[var(--color-border)] max-h-60 overflow-y-auto custom-scrollbar ${
+            fullWidth ? 'w-full min-w-full' : 'min-w-[150px]'
+          }`}
         >
           {options.map(opt => {
             const isSelected = opt.value === value;

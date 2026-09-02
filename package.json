@@ -1,12 +1,12 @@
 {
   "name": "dailyquest",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "pack": "npm run build && powershell -Command \"Compress-Archive -Path .\\dist\\* -DestinationPath .\\dailyquest-v1.0.0.zip -Force\"",
+    "pack": "npm run build && powershell -Command \"Compress-Archive -Path .\\dist\\* -DestinationPath .\\Dailyquest-v1.0.1.zip -Force\"",
     "test": "vitest run",
     "test:watch": "vitest"
   },

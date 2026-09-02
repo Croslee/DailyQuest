@@ -5,9 +5,20 @@ import { settingsRepository } from '@/db/index';
 import { applyTheme } from '@/constants/theme';
 import { notifyDataChanged, onDataChanged } from '@/services/syncChannel';
 
+const getInitialSettings = (): AppSettings => {
+  let lang = DEFAULT_SETTINGS.language;
+  try {
+    const saved = localStorage.getItem('dailyquest_language');
+    if (saved === 'vi' || saved === 'en') {
+      lang = saved;
+    }
+  } catch {}
+  return { ...DEFAULT_SETTINGS, language: lang };
+};
+
 /** Hook to access and update application settings with instant live sync */
 export function useSettings() {
-  const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState<AppSettings>(getInitialSettings);
   const [loading, setLoading] = useState(true);
 
   const loadSettings = useCallback(async () => {
@@ -36,6 +47,11 @@ export function useSettings() {
     key: K,
     value: AppSettings[K]
   ) => {
+    if (key === 'language') {
+      try {
+        localStorage.setItem('dailyquest_language', String(value));
+      } catch {}
+    }
     await settingsRepository.set(key, value);
     setSettings(prev => ({ ...prev, [key]: value }));
     if (key === 'theme') {

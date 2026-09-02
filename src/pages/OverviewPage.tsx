@@ -34,11 +34,13 @@ import {
 interface OverviewPageProps {
   onNavigateToCalendar?: (dateKey?: string) => void;
   onNavigateToQuests?: () => void;
+  onOpenAddQuest?: () => void;
 }
 
 export const OverviewPage: React.FC<OverviewPageProps> = ({
   onNavigateToCalendar,
   onNavigateToQuests,
+  onOpenAddQuest,
 }) => {
   const todayKey = getLocalDateKey();
   const { instances, score, loading: loadingInstances, reload: reloadInstances } = useTodayInstances();
@@ -367,7 +369,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             onEditQuest={(q) => setEditingQuest(q)}
             hideCompleted={filterTab === 'all' ? settings.hideCompleted : false}
             isCompletedTab={filterTab === 'completed'}
-            onAddQuest={() => setShowAddDialog(true)}
+            onAddQuest={onOpenAddQuest || (() => setShowAddDialog(true))}
             onUpdated={reloadAll}
           />
         )}
@@ -391,11 +393,13 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
       <Confetti active={showConfetti} onComplete={() => setShowConfetti(false)} />
 
       {/* Dialogs & Toasts */}
-      <AddQuestDialog
-        isOpen={showAddDialog}
-        onClose={() => setShowAddDialog(false)}
-        onSubmit={handleAddQuest}
-      />
+      {!onOpenAddQuest && (
+        <AddQuestDialog
+          isOpen={showAddDialog}
+          onClose={() => setShowAddDialog(false)}
+          onSubmit={handleAddQuest}
+        />
+      )}
 
       <EditQuestDialog
         quest={editingQuest}

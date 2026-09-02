@@ -12,7 +12,7 @@
     }
   },
   "background": {
-    "service_worker": "src/background/service-worker.ts",
+    "service_worker": "service-worker-loader.js",
     "type": "module"
   },
   "omnibox": {

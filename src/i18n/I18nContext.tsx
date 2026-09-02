@@ -17,20 +17,31 @@ const translations: Record<Language, Record<string, string>> = {
   en,
 };
 
+const getStoredLanguage = (): Language => {
+  try {
+    const s = localStorage.getItem('dailyquest_language');
+    if (s === 'vi' || s === 'en') return s;
+  } catch {}
+  return 'en';
+};
+
 const I18nContext = createContext<I18nContextType | null>(null);
 
 export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { settings, updateSetting } = useSettings();
-  const language = settings.language || 'vi';
+  const language = settings.language || getStoredLanguage();
 
   const setLanguage = async (lang: Language) => {
+    try {
+      localStorage.setItem('dailyquest_language', lang);
+    } catch {}
     await updateSetting('language', lang);
   };
 
   const t = useMemo(() => {
-    const dict = translations[language] || translations.vi;
+    const dict = translations[language] || translations.en;
     return (key: string, params?: Record<string, string | number>): string => {
-      let text = dict[key] || translations.en[key] || key;
+      let text = dict[key] || translations.en[key] || translations.vi[key] || key;
       if (params) {
         Object.entries(params).forEach(([pKey, pVal]) => {
           text = text.replace(new RegExp(`{${pKey}}`, 'g'), String(pVal));
@@ -50,10 +61,10 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export function useTranslation() {
   const context = useContext(I18nContext);
   if (!context) {
-    // Fallback if not wrapped in provider
-    const fallbackT = (key: string) => vi[key as keyof typeof vi] || key;
+    const lang = getStoredLanguage();
+    const fallbackT = (key: string) => en[key as keyof typeof en] || vi[key as keyof typeof vi] || key;
     return {
-      language: 'vi' as Language,
+      language: lang,
       setLanguage: async () => {},
       t: fallbackT,
     };

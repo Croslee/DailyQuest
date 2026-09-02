@@ -1,5 +1,14 @@
 # Architecture Overview
 
+## Tech Stack
+
+- **Platform:** Chrome/Chromium Extension, Manifest V3
+- **Frontend:** React 19, ReactDOM, TypeScript
+- **Styling & Icons:** Tailwind CSS, Lucide React
+- **Build:** Vite, CRXJS Vite Plugin
+- **Data:** Dexie.js with IndexedDB
+- **Testing:** Vitest, JSDOM, fake-indexeddb
+
 ## Project Structure
 
 ```text

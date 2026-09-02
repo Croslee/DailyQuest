@@ -61,19 +61,19 @@ export const BackupReminderBanner: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowExportModal(true)}
-            className="flex items-center gap-1 px-2.5 py-1 rounded font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-white shadow-sm hover:opacity-90 hover:shadow-md hover:shadow-amber-500/20 hover:-translate-y-0.5 active:scale-95 transition-all duration-150 cursor-pointer"
             style={{ backgroundColor: 'var(--color-xp)' }}
           >
-            <Download className="w-3 h-3" />
+            <Download className="w-3.5 h-3.5" />
             <span>{language === 'vi' ? 'Sao lưu ngay' : 'Backup Now'}</span>
           </button>
           <button
             type="button"
             onClick={handleDismiss}
-            className="p-1 rounded text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)]"
-            title="Dismiss reminder for 7 days"
+            className="p-1.5 rounded-lg text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] hover:bg-[rgba(0,0,0,0.08)] active:scale-90 transition-all duration-150 cursor-pointer"
+            title={language === 'vi' ? 'Ẩn lời nhắc trong 7 ngày' : 'Dismiss reminder for 7 days'}
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
       </div>

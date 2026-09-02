@@ -24,10 +24,17 @@ export class SettingsRepository {
   /** Get all settings, merged with defaults */
   async getAll(): Promise<AppSettings> {
     const records = await this.db.settings.toArray();
-    const settings = { ...DEFAULT_SETTINGS };
+    let initialLang = DEFAULT_SETTINGS.language;
+    try {
+      const saved = localStorage.getItem('dailyquest_language');
+      if (saved === 'vi' || saved === 'en') {
+        initialLang = saved;
+      }
+    } catch {}
+    const settings: AppSettings = { ...DEFAULT_SETTINGS, language: initialLang };
     for (const record of records) {
       if (record.key in settings) {
-        (settings as Record<string, unknown>)[record.key] = record.value;
+        (settings as unknown as Record<string, unknown>)[record.key] = record.value;
       }
     }
     return settings;

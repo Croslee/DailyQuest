@@ -21,6 +21,8 @@ import { getLocalDateKey, nowISO } from '@/utils/date';
  * 2. Service worker alarm (midnight)
  * 3. Date change detection (useDateCheck)
  */
+let inFlightGeneration: Promise<number> | null = null;
+
 export const questGenerationService = {
   /**
    * Generate quest instances for today and handle missed quests from previous days.
@@ -43,60 +45,87 @@ export const questGenerationService = {
    * Used by generateForToday and testable with any date.
    */
   async generateForDate(date: string): Promise<number> {
-    // Step 1: Mark pending instances from previous days as 'missed'
-    await this.markMissedInstances(date);
+    // If a generation is currently running, wait for it to complete to prevent race conditions
+    while (inFlightGeneration) {
+      await inFlightGeneration;
+    }
 
-    // Step 2: Get active quests and existing instances
-    const activeQuests = await questRepository.getActive();
-    const existingInstances = await questInstanceRepository.getByDate(date);
+    const runGeneration = async (): Promise<number> => {
+      // Step 1: Mark pending instances from previous days as 'missed'
+      await this.markMissedInstances(date);
 
-    // Also need all instances for 'once' recurrence check
-    const allInstanceSummaries: { questId: string; date: string }[] = [];
-    
-    // For 'once' quests, we need to check if they have ANY instance
-    const onceQuests = activeQuests.filter(q => q.recurrence.type === 'once');
-    for (const quest of onceQuests) {
-      const hasInstance = await questInstanceRepository.existsForQuest(quest.id);
-      if (hasInstance) {
-        allInstanceSummaries.push({ questId: quest.id, date });
+      // Step 2: Get active quests and existing instances
+      const activeQuests = await questRepository.getActive();
+      const existingInstances = await questInstanceRepository.getByDate(date);
+
+      // Step 2b: Deduplicate any accidental duplicate instances for this date
+      const seenQuests = new Set<string>();
+      const validInstances: QuestInstance[] = [];
+      for (const inst of existingInstances) {
+        if (seenQuests.has(inst.questId)) {
+          // Extra duplicate found — remove it from database
+          await questInstanceRepository.delete(inst.id);
+        } else {
+          seenQuests.add(inst.questId);
+          validInstances.push(inst);
+        }
       }
-    }
 
-    // Add today's existing instances to the summary
-    for (const inst of existingInstances) {
-      allInstanceSummaries.push({ questId: inst.questId, date: inst.date });
-    }
-
-    // Step 3: Generate instances for quests that need them
-    const now = nowISO();
-    let createdCount = 0;
-
-    for (const quest of activeQuests) {
-      if (shouldGenerateInstance(quest, date, allInstanceSummaries)) {
-        const subtasks = quest.subtasks?.map(s => ({ ...s, completed: false }));
-
-        const instance: QuestInstance = {
-          id: generateId(),
-          questId: quest.id,
-          date,
-          status: 'pending',
-          subtasks,
-          createdAt: now,
-          updatedAt: now,
-        };
-
-        await questInstanceRepository.create(instance);
-        createdCount++;
-
-        // Add to summaries to prevent duplicates in this run
-        allInstanceSummaries.push({ questId: quest.id, date });
+      // Also need all instances for 'once' recurrence check
+      const allInstanceSummaries: { questId: string; date: string }[] = [];
+      
+      // For 'once' quests, we need to check if they have ANY instance
+      const onceQuests = activeQuests.filter(q => q.recurrence.type === 'once');
+      for (const quest of onceQuests) {
+        const hasInstance = await questInstanceRepository.existsForQuest(quest.id);
+        if (hasInstance) {
+          allInstanceSummaries.push({ questId: quest.id, date });
+        }
       }
+
+      // Add today's existing instances to the summary
+      for (const inst of validInstances) {
+        allInstanceSummaries.push({ questId: inst.questId, date: inst.date });
+      }
+
+      // Step 3: Generate instances for quests that need them
+      const now = nowISO();
+      let createdCount = 0;
+
+      for (const quest of activeQuests) {
+        if (shouldGenerateInstance(quest, date, allInstanceSummaries)) {
+          const subtasks = quest.subtasks?.map(s => ({ ...s, completed: false }));
+
+          const instance: QuestInstance = {
+            id: generateId(),
+            questId: quest.id,
+            date,
+            status: 'pending',
+            subtasks,
+            createdAt: now,
+            updatedAt: now,
+          };
+
+          await questInstanceRepository.create(instance);
+          createdCount++;
+
+          // Add to summaries to prevent duplicates in this run
+          allInstanceSummaries.push({ questId: quest.id, date });
+        }
+      }
+
+      // Step 4: Update daily stats for today
+      await this.updateDailyStats(date);
+
+      return createdCount;
+    };
+
+    inFlightGeneration = runGeneration();
+    try {
+      return await inFlightGeneration;
+    } finally {
+      inFlightGeneration = null;
     }
-
-    // Step 4: Update daily stats for today
-    await this.updateDailyStats(date);
-
-    return createdCount;
   },
 
   /**

@@ -93,7 +93,6 @@ export const Dashboard: React.FC = () => {
     await questService.create(input);
     await questGenerationService.generateForToday();
     await reloadGlobalState();
-    notifyDataChanged('dashboard.handleCreateQuest');
   };
 
   const toggleTheme = async () => {
@@ -260,6 +259,7 @@ export const Dashboard: React.FC = () => {
               <OverviewPage
                 onNavigateToCalendar={() => setActivePage('calendar')}
                 onNavigateToQuests={() => setActivePage('quests')}
+                onOpenAddQuest={() => setShowGlobalAddDialog(true)}
               />
             )}
             {activePage === 'quests' && <QuestsPage />}

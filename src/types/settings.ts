@@ -34,7 +34,7 @@ export interface AppSettings {
 /** Default settings values */
 export const DEFAULT_SETTINGS: AppSettings = {
   theme: 'system',
-  language: 'vi',
+  language: 'en',
   hideCompleted: true,
   completionAnimation: true,
   soundEffects: true,

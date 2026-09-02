@@ -164,8 +164,10 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                     key={opt.value}
                     type="button"
                     onClick={() => handleThemeChange(opt.value)}
-                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all ${
-                      isSelected ? 'ring-2 ring-[var(--color-accent)] font-bold' : 'hover:border-[var(--color-border-hover)]'
+                    className={`group flex items-center justify-center gap-2.5 p-3 rounded-xl border text-xs font-medium transition-all duration-200 cursor-pointer ${
+                      isSelected
+                        ? 'ring-2 ring-[var(--color-accent)] font-bold shadow-md shadow-indigo-500/15 -translate-y-0.5'
+                        : 'hover:border-[var(--color-accent)] hover:-translate-y-1 hover:shadow-md hover:shadow-indigo-500/10 active:scale-95'
                     }`}
                     style={{
                       backgroundColor: isSelected ? 'var(--color-accent-light)' : 'var(--color-bg-secondary)',
@@ -173,7 +175,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                       color: isSelected ? 'var(--color-accent)' : 'var(--color-text-primary)',
                     }}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-4 h-4 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-6" />
                     <span>{label}</span>
                   </button>
                 );
@@ -188,8 +190,8 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
             </label>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { val: 'vi', label: '🇻🇳 Tiếng Việt' },
                 { val: 'en', label: '🇬🇧 English' },
+                { val: 'vi', label: '🇻🇳 Tiếng Việt' },
               ].map(({ val, label }) => {
                 const isSelected = language === val;
                 return (
@@ -197,8 +199,10 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                     key={val}
                     type="button"
                     onClick={() => handleLanguageChange(val as Language)}
-                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all ${
-                      isSelected ? 'ring-2 ring-[var(--color-accent)] font-bold' : 'hover:border-[var(--color-border-hover)]'
+                    className={`group flex items-center justify-center gap-2.5 p-3 rounded-xl border text-xs font-medium transition-all duration-200 cursor-pointer ${
+                      isSelected
+                        ? 'ring-2 ring-[var(--color-accent)] font-bold shadow-md shadow-indigo-500/15 -translate-y-0.5'
+                        : 'hover:border-[var(--color-accent)] hover:-translate-y-1 hover:shadow-md hover:shadow-indigo-500/10 active:scale-95'
                     }`}
                     style={{
                       backgroundColor: isSelected ? 'var(--color-accent-light)' : 'var(--color-bg-secondary)',
@@ -206,7 +210,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                       color: isSelected ? 'var(--color-accent)' : 'var(--color-text-primary)',
                     }}
                   >
-                    <Globe className="w-4 h-4" />
+                    <Globe className="w-4 h-4 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-12" />
                     <span>{label}</span>
                   </button>
                 );
@@ -242,8 +246,8 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
               <button
                 type="button"
                 onClick={() => playQuestCompleteSound(true)}
-                className="px-2 py-1 text-[11px] rounded border transition-opacity hover:opacity-80"
-                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+                className="px-2.5 py-1 text-[11px] font-medium rounded-lg border border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:bg-[var(--color-accent-light)] hover:shadow-xs hover:-translate-y-0.5 active:scale-95 transition-all duration-150 cursor-pointer"
+                style={{ color: 'var(--color-text-secondary)' }}
               >
                 {t('settings.testSound')}
               </button>
@@ -311,7 +315,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                 type="button"
                 onClick={() => updateSetting('dailyGoal', Math.max(1, settings.dailyGoal - 1))}
                 disabled={settings.dailyGoal <= 1}
-                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] active:scale-90 transition-all disabled:opacity-30 align-middle leading-none"
+                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] hover:shadow-xs active:scale-90 transition-all duration-150 disabled:opacity-30 align-middle leading-none cursor-pointer"
                 aria-label="Decrease daily goal"
               >
                 <Minus className="w-3.5 h-3.5" />
@@ -323,7 +327,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                 type="button"
                 onClick={() => updateSetting('dailyGoal', Math.min(50, settings.dailyGoal + 1))}
                 disabled={settings.dailyGoal >= 50}
-                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] active:scale-90 transition-all disabled:opacity-30 align-middle leading-none"
+                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] hover:shadow-xs active:scale-90 transition-all duration-150 disabled:opacity-30 align-middle leading-none cursor-pointer"
                 aria-label="Increase daily goal"
               >
                 <Plus className="w-3.5 h-3.5" />
@@ -356,18 +360,19 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                 updateSetting('defaultXP', XP_DEFAULTS[diff]);
               }}
               defaultValue="normal"
+              fullWidth={true}
             />
           </div>
 
           {/* Default XP */}
           <div className="p-3.5 rounded-xl border flex flex-col justify-between" style={{ backgroundColor: 'var(--color-bg-secondary)', borderColor: 'var(--color-border)' }}>
             <label className="block text-xs font-semibold mb-1.5">{t('quest.xp')}</label>
-            <div className="inline-flex items-center rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-0.5 shadow-2xs w-full justify-between">
+            <div className="inline-flex items-center rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-primary)] p-0.5 shadow-2xs w-full justify-between h-[34px]">
               <button
                 type="button"
                 onClick={() => updateSetting('defaultXP', Math.max(5, settings.defaultXP - 5))}
                 disabled={settings.defaultXP <= 5}
-                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] active:scale-90 transition-all disabled:opacity-30 align-middle leading-none"
+                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] hover:shadow-xs active:scale-90 transition-all disabled:opacity-30 align-middle leading-none cursor-pointer"
                 aria-label="Decrease default XP"
               >
                 <Minus className="w-3.5 h-3.5" />
@@ -379,7 +384,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                 type="button"
                 onClick={() => updateSetting('defaultXP', Math.min(500, settings.defaultXP + 5))}
                 disabled={settings.defaultXP >= 500}
-                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] active:scale-90 transition-all disabled:opacity-30 align-middle leading-none"
+                className="w-7 h-7 inline-flex items-center justify-center rounded-md text-xs font-bold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)] hover:shadow-xs active:scale-90 transition-all disabled:opacity-30 align-middle leading-none cursor-pointer"
                 aria-label="Increase default XP"
               >
                 <Plus className="w-3.5 h-3.5" />
@@ -398,6 +403,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
               }))}
               onChange={val => updateSetting('defaultPriority', val as Priority)}
               defaultValue="medium"
+              fullWidth={true}
             />
           </div>
         </div>
@@ -618,12 +624,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
               This will permanently delete all your quest templates, completion records, daily stats, and streaks from IndexedDB. This action <strong>cannot be undone</strong> unless you have exported a JSON backup.
             </p>
 
-            <div className="flex gap-2 pt-2">
+            <div className="flex gap-2.5 pt-2">
               <button
                 type="button"
                 onClick={() => setShowClearConfirm(false)}
-                className="flex-1 py-1.5 text-xs rounded-md border"
-                style={{ borderColor: 'var(--color-border)', color: 'var(--color-text-secondary)' }}
+                className="flex-1 py-2 text-xs font-semibold rounded-lg border border-[var(--color-border)] hover:bg-[var(--color-bg-secondary)] hover:border-[var(--color-border-hover)] hover:-translate-y-0.5 active:scale-95 transition-all duration-150 cursor-pointer"
+                style={{ color: 'var(--color-text-secondary)' }}
               >
                 {t('common.cancel')}
               </button>
@@ -632,10 +638,10 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onDataChanged }) => 
                 type="button"
                 onClick={handleClearDatabase}
                 disabled={clearing}
-                className="flex-1 py-1.5 text-xs font-semibold rounded-md transition-colors"
+                className="flex-1 py-2 text-xs font-semibold rounded-lg transition-all duration-150 hover:opacity-95 hover:shadow-md hover:shadow-red-500/25 hover:-translate-y-0.5 active:scale-95 cursor-pointer disabled:opacity-50"
                 style={{ backgroundColor: 'var(--color-danger)', color: '#fff' }}
               >
-                {clearing ? 'Clearing...' : 'Confirm Wipe'}
+                {clearing ? 'Clearing...' : (language === 'vi' ? 'Xác nhận xóa' : 'Confirm Wipe')}
               </button>
             </div>
           </div>

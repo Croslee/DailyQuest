@@ -92,11 +92,13 @@ export const AddQuestDialog: React.FC<AddQuestDialogProps> = ({ isOpen, onClose,
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || isSubmitting) return;
+    if (!title.trim() || isSubmittingRef.current) return;
 
+    isSubmittingRef.current = true;
     setIsSubmitting(true);
     try {
       let recurrence: Recurrence;
@@ -118,6 +120,7 @@ export const AddQuestDialog: React.FC<AddQuestDialogProps> = ({ isOpen, onClose,
       });
       onClose();
     } finally {
+      isSubmittingRef.current = false;
       setIsSubmitting(false);
     }
   };

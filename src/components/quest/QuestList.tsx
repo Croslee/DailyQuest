@@ -46,6 +46,9 @@ export const QuestList: React.FC<QuestListProps> = ({
   // Keyboard navigation listener (J/K or Arrow Down/Up)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if already handled by parent window listener
+      if (e.defaultPrevented) return;
+
       // Don't trigger if user is typing in an input or textarea or when a modal is open
       const isInput =
         document.activeElement?.tagName === 'INPUT' ||
@@ -53,18 +56,21 @@ export const QuestList: React.FC<QuestListProps> = ({
         document.activeElement?.tagName === 'SELECT';
       const isModalOpen = Boolean(document.querySelector('[role="dialog"], [role="alertdialog"]'));
 
-      if (isInput || isModalOpen || visibleInstances.length === 0) {
-        if (!isInput && !isModalOpen && (e.key === 'n' || e.key === 'N') && onAddQuest) {
-          e.preventDefault();
-          onAddQuest();
-        }
+      if (isInput || isModalOpen) {
         return;
       }
 
       if ((e.key === 'n' || e.key === 'N') && onAddQuest) {
         e.preventDefault();
         onAddQuest();
-      } else if (e.key === 'j' || e.key === 'ArrowDown') {
+        return;
+      }
+
+      if (visibleInstances.length === 0) {
+        return;
+      }
+
+      if (e.key === 'j' || e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex(prev => (prev + 1) % visibleInstances.length);
       } else if (e.key === 'k' || e.key === 'ArrowUp') {
