@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "pack": "npm run build && powershell -Command \"Compress-Archive -Path .\\dist\\* -DestinationPath .\\dailyquest-v1.0.0.zip -Force\"",
     "test": "vitest run",
     "test:watch": "vitest"
   },
